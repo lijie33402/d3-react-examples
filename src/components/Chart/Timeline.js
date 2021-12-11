@@ -43,6 +43,7 @@ const Timeline = ({ data }) => {
       .transition()
       .call(yAxisGenerator)
   }
+  const formatDate = d3.timeFormat("%b%d")
   return (
     <div className="time-line" ref={ref}>
       <svg className="chart" width={dimensions.width} height={dimensions.height}>
@@ -52,12 +53,61 @@ const Timeline = ({ data }) => {
           style={pathStyle}
           d={lineGenerator(data)}
         />
-        <g className="x-axis" ref={xRef} transform={`translate(0, ${dimensions.boundedHeight})`}></g>
-        <g className="y-axis" ref={yRef}></g>
+        <XAxis dimensions={dimensions} xScale= {xScale} formatTick={formatDate} />
+        <YAxis dimensions={dimensions} yScale= {yScale} />
+        {/* <g className="x-axis" ref={xRef} transform={`translate(0, ${dimensions.boundedHeight})`}></g> */}
+        {/* <g className="y-axis" ref={yRef}></g> */}
         </g>
       </svg>
     </div>
   )
 }
+
+// 不用d3直接生成坐标轴，而是dom自己写，借用d3的方法来生成。
+const XAxis = ({ dimensions, xScale, formatTick }) => {
+  const ticks = xScale.ticks();
+  return (
+    <g className="x-axis" transform={`translate(0, ${dimensions.boundedHeight})`}>
+      <line
+        className="x-axis-line"
+        x2={dimensions.boundedWidth}
+      />
+
+      {ticks.map((tick, i) => (
+        <text
+          key={tick}
+          className="x-axis-text"
+          transform={`translate(${xScale(tick)}, 25)`}
+        >
+          { formatTick(tick) }
+        </text>
+      ))}
+    </g>
+  )
+}
+
+// 不用d3直接生成坐标轴，而是dom自己写，借用d3的方法来生成。
+const YAxis = ({ dimensions, yScale, formatTick }) => {
+  const ticks = yScale.ticks();
+  return (
+    <g className="y-axis">
+      <line
+        className="y-axis-line"
+        y2={dimensions.boundedHeight}
+      />
+
+      {ticks.map((tick, i) => (
+        <text
+          key={tick}
+          className="y-axis-text"
+          transform={`translate(-25, ${yScale(tick)})`}
+        >
+          { tick }
+        </text>
+      ))}
+    </g>
+  )
+}
+
 
 export default Timeline;
