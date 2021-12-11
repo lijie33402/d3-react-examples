@@ -1,0 +1,8 @@
+.x-axis-line, .y-axis-line {
+  stroke: black;
+}
+
+.x-axis-text, .y-axis-text {
+  font-size: 0.9em;
+  transition: all 0.3s ease-out;
+}
