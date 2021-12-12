@@ -87,7 +87,7 @@ async function drawLineChart() {
   const yAxisGenerator = d3.axisLeft()  // We want labels of the y-axis to be to the left of the axis line
     .scale(yScale)
   // Our axis generator will create lots of element; create a g element to contain them and keep our DOM organized
-  const yAxis = bounds.call(yAxisGenerator)
+  const yAxis = bounds.append("g").call(yAxisGenerator)
 
   // Draw x axis tick marks and labels
   const xAxisGenerator = d3.axisBottom()  // We want our labels of the x-axis to appear under the axis line

@@ -1,5 +1,5 @@
 .time-line {
-  width: 50%;
+  width:800px;
   height: 400px;
   margin: 0 auto;
 }
@@ -11,4 +11,10 @@
 .x-axis-text, .y-axis-text {
   font-size: 0.9em;
   transition: all 0.3s ease-out;
+}
+
+.scatter-plot {
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
 }

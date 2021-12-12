@@ -20,3 +20,10 @@ export const getTimelineData = (length = 100) => {
     }
   })
 }
+
+export const getScatterData = (count = 100) => (
+  new Array(count).fill(0).map((d, i) => ({
+    temperature: randomAroundMean(70, 20),
+    humidity: randomAroundMean(0.5, 0.1),
+  }))
+)

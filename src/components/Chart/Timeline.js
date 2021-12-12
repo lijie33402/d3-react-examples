@@ -45,7 +45,7 @@ const Timeline = ({ data }) => {
   }
   const formatDate = d3.timeFormat("%b%d")
   return (
-    <div className="time-line" ref={ref}>
+    <div className="time-line wrapper" ref={ref}>
       <svg className="chart" width={dimensions.width} height={dimensions.height}>
         <g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>
         <path
@@ -79,7 +79,7 @@ const XAxis = ({ dimensions, xScale, formatTick }) => {
           className="x-axis-text"
           transform={`translate(${xScale(tick)}, 25)`}
         >
-          { formatTick(tick) }
+          { formatTick ? formatTick(tick) : tick }
         </text>
       ))}
     </g>
@@ -102,7 +102,7 @@ const YAxis = ({ dimensions, yScale, formatTick }) => {
           className="y-axis-text"
           transform={`translate(-25, ${yScale(tick)})`}
         >
-          { tick }
+          { formatTick ? formatTick(tick) : tick }
         </text>
       ))}
     </g>
