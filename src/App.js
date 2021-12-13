@@ -6,21 +6,24 @@ import Timeline from "./components/Chart/Timeline";
 import ScatterPlot from "./components/Chart/ScatterPlot";
 
 function App() {
-  const [tData, setTData] = useState(getTimelineData());
-  const [sData, setSData] = useState(getScatterData());
+  console.log('render app')
+  const getData = () => ({
+    timeline: getTimelineData(),
+    scatter: getScatterData(),
+  })
+  const [data, setData] = useState(getData());
   useInterval(() => {
-    setTData(getTimelineData());
-    setSData(getScatterData());
+    setData(getData());
   }, 4000)
   return (
     <div className="App">
       <h1>d3 timeline by react</h1>
       <Timeline
-        data={ tData }
+        data={ data.timeline }
       />
       <h1>d3 scatterplot by react</h1>
       <ScatterPlot
-        data={ sData }
+        data={ data.scatter }
       />
     </div>
   );

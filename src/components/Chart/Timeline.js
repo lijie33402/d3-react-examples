@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import './Timeline.css';
 
 const Timeline = ({ data }) => {
+  console.log('render timeline')
   const [ref, dimensions] = useChartDimensions();
   const dateParser = d3.timeParse("%m/%d/%Y");
   const xAccessor = d => dateParser(d.date);
