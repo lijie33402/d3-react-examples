@@ -3,6 +3,8 @@ import ResizeObserver from "resize-observer-polyfill";
 
 export const combineChartDimensions = dimensions => {
   let parsedDimensions = {
+    width: 0,
+    height: 0,
     marginTop: 40,
     marginRight: 30,
     marginBottom: 40,
@@ -20,16 +22,7 @@ export const combineChartDimensions = dimensions => {
 // 获取容器宽高，如果没有传入width和height则监控容器变化更新width和height，如果传入了则直接使用传入宽高。
 export const useChartDimensions = passedSettings => {
   const ref = useRef()
-  const dimensions = combineChartDimensions(passedSettings)
-
-  // if (dimensions.width && dimensions.height) return [ref, sdimensions]
-  const initialWidth = dimensions.width || 0;
-  const initialHeight = dimensions.height || 0;
-  // const [width, changeWidth] = useState(initialWidth)
-  // const [height, changeHeight] = useState(initialHeight)
-  // 合并有关联的state，减少组件更新
-  const [wd, changeWd] = useState({width: initialWidth, height: initialHeight});
-
+  const [dimensions, setDimensions] = useState(combineChartDimensions(passedSettings));
   useEffect(() => {
     const element = ref.current
     const resizeObserver = new ResizeObserver(entries => {
@@ -37,27 +30,18 @@ export const useChartDimensions = passedSettings => {
       if (!entries.length) return
 
       const entry = entries[0]
-
-      // if (width !== entry.contentRect.width) changeWidth(entry.contentRect.width)
-      // if (height !== entry.contentRect.height) changeHeight(entry.contentRect.height)
-      if (wd.width !== entry.contentRect.width || wd.height !== entry.contentRect.height) {
-        changeWd({
+      if (dimensions.width !== entry.contentRect.width || dimensions.height !== entry.contentRect.height) {
+        setDimensions(combineChartDimensions({
+          ...dimensions,
           width: entry.contentRect.width,
           height: entry.contentRect.height
-        })
+        }))
       }
     })
 
     resizeObserver.observe(element)
 
     return () => resizeObserver.unobserve(element)
-  }, [])
-
-  const newSettings = combineChartDimensions({
-    ...dimensions,
-    width: dimensions.width || wd.width,
-    height: dimensions.height || wd.height,
-  })
-
-  return [ref, newSettings]
+  }, []);
+  return [ref, dimensions];
 }

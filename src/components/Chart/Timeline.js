@@ -5,6 +5,7 @@ import './Timeline.css';
 
 const Timeline = ({ data }) => {
   console.log('render timeline')
+
   const [ref, dimensions] = useChartDimensions();
   const dateParser = d3.timeParse("%m/%d/%Y");
   const xAccessor = d => dateParser(d.date);
@@ -17,7 +18,6 @@ const Timeline = ({ data }) => {
     .domain(d3.extent(data, yAccessor))
     .range([dimensions.boundedHeight, 0])
     .nice();
-
   const lineGenerator = d3.line()
     .x(d => xScale(xAccessor(d)))
     .y(d => yScale(yAccessor(d)));
@@ -28,36 +28,36 @@ const Timeline = ({ data }) => {
     strokeWidth: 2
   };
 
-  const xAxisGenerator = d3.axisBottom()
-    .scale(xScale);
-  const yAxisGenerator = d3.axisLeft()
-    .scale(yScale);
-  const xRef = useRef();
-  const yRef = useRef();
-  if (xRef.current) {
-    d3.select(xRef.current)
-      .transition()
-      .call(xAxisGenerator)
-  }
-  if (yRef.current) {
-    d3.select(yRef.current)
-      .transition()
-      .call(yAxisGenerator)
-  }
+  // const xAxisGenerator = d3.axisBottom()
+  //   .scale(xScale);
+  // const yAxisGenerator = d3.axisLeft()
+  //   .scale(yScale);
+  // const xRef = useRef();
+  // const yRef = useRef();
+  // if (xRef.current) {
+  //   d3.select(xRef.current)
+  //     .transition()
+  //     .call(xAxisGenerator)
+  // }
+  // if (yRef.current) {
+  //   d3.select(yRef.current)
+  //     .transition()
+  //     .call(yAxisGenerator)
+  // }
   const formatDate = d3.timeFormat("%b%d")
   return (
     <div className="time-line wrapper" ref={ref}>
-      <svg className="chart" width={dimensions.width} height={dimensions.height}>
+      <svg className="chart">
         <g transform={`translate(${dimensions.marginLeft}, ${dimensions.marginTop})`}>
-        <path
-          className="line"
-          style={pathStyle}
-          d={lineGenerator(data)}
-        />
-        <XAxis dimensions={dimensions} xScale= {xScale} formatTick={formatDate} />
-        <YAxis dimensions={dimensions} yScale= {yScale} />
-        {/* <g className="x-axis" ref={xRef} transform={`translate(0, ${dimensions.boundedHeight})`}></g> */}
-        {/* <g className="y-axis" ref={yRef}></g> */}
+          <path
+            className="line"
+            style={pathStyle}
+            d={lineGenerator(data)}
+          />
+          <XAxis dimensions={dimensions} xScale= {xScale} formatTick={formatDate} />
+          <YAxis dimensions={dimensions} yScale= {yScale} />
+          {/* <g className="x-axis" ref={xRef} transform={`translate(0, ${dimensions.boundedHeight})`}></g> */}
+          {/* <g className="y-axis" ref={yRef}></g> */}
         </g>
       </svg>
     </div>

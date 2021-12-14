@@ -27,3 +27,28 @@ export const getScatterData = (count = 100) => (
     humidity: randomAroundMean(0.5, 0.1),
   }))
 )
+
+export const getTreeChartData = () => {
+  return {
+    name: '爷爷',
+    children: [
+      {
+        name: '爸爸',
+        children: [
+          {
+            name: '儿子'
+          },
+          {
+            name: '女儿'
+          },
+        ]
+      },
+      {
+        name: '叔叔',
+        children: [
+
+        ]        
+      }
+    ]
+  }
+}
