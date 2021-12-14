@@ -22,7 +22,7 @@ const ScatterPlot = ({ data }) => {
   const yAccessorScaled = d => yScale(yAccessor(d))
 
   const xLabel = '温度';
-  const yLabel = '湿度';
+  const yLabel = '湿度';  
   return (
     <div className="scatter-plot wrapper" ref={ref}>
       <svg className="chart">
@@ -91,9 +91,7 @@ const YAxis = ({ dimensions, yScale, formatTick, label }) => {
       {label && (
         <text
           className="y-axis-label"
-          style={{
-            transform: `translate(-50, ${dimensions.boundedHeight / 2}) rotate(-90deg)`
-          }}
+          transform={`translate(-56, ${dimensions.boundedHeight / 2}) rotate(-90)`}
         >
           { label }
         </text>
